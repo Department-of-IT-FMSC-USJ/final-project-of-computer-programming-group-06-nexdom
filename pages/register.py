@@ -1,7 +1,7 @@
 import streamlit as st
+from pages.style import inject_global_css, page_banner
 
-st.title("📝 Register")
-st.markdown("---")
+inject_global_css()
 
 if "db" not in st.session_state:
     st.warning("⚠️ Please go to 🏠 Home page first.")
@@ -9,9 +9,25 @@ if "db" not in st.session_state:
 
 db = st.session_state.db
 
+page_banner(
+    title="Create Your Account",
+    subtitle="Join NEXDOM and connect with trusted home service professionals.",
+    icon="📝",
+)
+
 col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
+    st.markdown(
+        "<div style='background:white; border:1px solid #E2E8F0; border-radius:16px;"
+        " padding:2rem; box-shadow:0 4px 20px rgba(0,0,0,0.08);'>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<h3 style='text-align:center; color:#0F172A; margin-bottom:1rem;'>📝 Sign Up</h3>",
+        unsafe_allow_html=True,
+    )
+
     role = st.selectbox("👤 Register As", ["customer", "provider"])
     address = ""
 
@@ -26,7 +42,16 @@ with col2:
             address = st.text_input("Address *")
 
         if role == "provider":
-            st.info("📋 Provider registrations require **admin approval** before you can log in.")
+            st.markdown(
+                """
+                <div style='background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px;
+                            padding:0.7rem 1rem; margin:0.5rem 0; font-size:0.85rem; color:#1E40AF;'>
+                  📋 Provider registrations require <strong>admin approval</strong>
+                  before you can log in.
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
             service_type = st.selectbox(
                 "Service *",
                 ["plumbing", "carpentry", "electrical", "painting", "cleaning"]
@@ -54,7 +79,6 @@ with col2:
                     st.error(f"❌ {e}")
             else:
                 if role == "customer":
-                    # Customers register directly as before
                     result = db.create_user(
                         name, email, password, phone, role, address
                     )
@@ -65,7 +89,6 @@ with col2:
                         st.error(f"❌ {result['message']}")
 
                 elif role == "provider":
-                    # Providers submit a request — pending admin approval
                     result = db.create_provider_request(
                         name, email, password, phone,
                         service_type, experience, hourly_rate,
@@ -80,9 +103,15 @@ with col2:
                     else:
                         st.error(f"❌ {result['message']}")
 
-    st.markdown("---")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
     col_r1, col_r2, col_r3 = st.columns([1, 2, 1])
     with col_r2:
-        st.markdown("**Already have an account?**")
+        st.markdown(
+            "<p style='text-align:center; color:#64748B; font-size:0.85rem;'>"
+            "Already have an account?</p>",
+            unsafe_allow_html=True,
+        )
         if st.button("🔑 Login Here", use_container_width=True):
             st.switch_page("pages/login.py")

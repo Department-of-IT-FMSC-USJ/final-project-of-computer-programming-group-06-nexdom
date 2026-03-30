@@ -3,8 +3,6 @@ from pages.style import inject_global_css, section_header, page_banner
 
 inject_global_css()
 
-# Remove the conflicting set_page_config call — home.py owns it
-# st.set_page_config(page_title="My Bookings", page_icon="📋")
 
 page_banner(
     title="My Bookings",
@@ -35,7 +33,7 @@ if not bookings:
     )
     st.stop()
 
-# ---- Status Summary ----
+# Status Summary
 section_header("📊 Booking Summary")
 
 s1, s2, s3, s4, s5 = st.columns(5)
@@ -175,7 +173,7 @@ def show_booking(b, tab_prefix):
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ---- Tabbed view ----
+# Tabbed view
 t1, t2, t3, t4, t5 = st.tabs(["📋 All", "🟡 Pending", "🟢 Accepted", "✅ Completed", "❌ Cancelled"])
 
 with t1:

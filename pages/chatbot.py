@@ -12,9 +12,8 @@ if not st.session_state.get("logged_in") or st.session_state.user_role != "custo
 
 db = st.session_state.db
 
-# ==========================================
 # AUTO-CONNECT WITH API KEY (NO USER INPUT)
-# ==========================================
+
 API_KEY = "AIzaSyB7eqZ0Yf0f9iR1pq4r6t5OwM6knyV_A2U"  # <-- Paste your key here
 
 if "rag_bot" not in st.session_state:
@@ -27,16 +26,14 @@ if "messages" not in st.session_state:
 
 bot = st.session_state.rag_bot
 
-# ==========================================
 # MAIN PAGE
-# ==========================================
+
 st.title("🤖 HomeHelper AI ChatBot")
 st.markdown("*Powered by **RAG Architecture** + **Google Gemini AI***")
 st.markdown("---")
 
-# ==========================================
 # QUICK SERVICE BUTTONS
-# ==========================================
+
 st.subheader("⚡ Quick Recommendations")
 services = ["plumbing", "carpentry", "electrical", "painting", "cleaning"]
 btn_cols = st.columns(5)
@@ -53,16 +50,15 @@ for i, col in enumerate(btn_cols):
 
 st.markdown("---")
 
-# ==========================================
 # CHAT DISPLAY
-# ==========================================
+
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# ==========================================
+
 # CHAT INPUT
-# ==========================================
+
 user_input = st.chat_input("Ask me anything about service providers...")
 
 if user_input:

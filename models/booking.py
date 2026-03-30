@@ -29,7 +29,7 @@ class Booking:
         self.__status = "pending"
         self.__created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
 
-    # ---- Getters ----
+    # Getters 
     def get_booking_id(self):
         return self.__booking_id
 
@@ -60,7 +60,7 @@ class Booking:
     def get_created_at(self):
         return self.__created_at
 
-    # ---- Setters ----
+    # Setters
     def set_status(self, status):
         valid = ["pending", "accepted", "rejected", "completed", "cancelled"]
         if status in valid:

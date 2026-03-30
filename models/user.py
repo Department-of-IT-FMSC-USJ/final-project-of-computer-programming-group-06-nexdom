@@ -13,7 +13,7 @@ class User:
         self.__role = role
         self.__is_logged_in = False
 
-    # ---- Getters ----
+    # Getters
     def get_user_id(self):
         return self.__user_id
 
@@ -32,7 +32,7 @@ class User:
     def is_logged_in(self):
         return self.__is_logged_in
 
-    # ---- Setters ----
+    # Setters
     def set_name(self, name):
         if name and len(name) >= 2:
             self.__name = name
@@ -51,7 +51,7 @@ class User:
             return True
         return False
 
-    # ---- Authentication Methods ----
+    # Authentication Methods
     def login(self, email, password):
         """Authenticate user with email and password"""
         if self.__email == email and self.__password == password:
@@ -71,7 +71,7 @@ class User:
                 return True
         return False
 
-    # ---- Display ----
+    # Display
     def display_info(self):
         """Return user info as dictionary"""
         return {

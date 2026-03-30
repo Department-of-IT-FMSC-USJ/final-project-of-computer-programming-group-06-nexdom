@@ -20,7 +20,7 @@ if not st.session_state.get("logged_in") or st.session_state.user_role != "custo
 db   = st.session_state.db
 user = st.session_state.user_data
 
-# ---- Filter Bar ----
+# Filter Bar
 st.markdown(
     "<div style='background:white; border:1px solid #E2E8F0; border-radius:12px;"
     " padding:1rem 1.2rem; box-shadow:0 1px 4px rgba(0,0,0,0.05); margin-bottom:1rem;'>",

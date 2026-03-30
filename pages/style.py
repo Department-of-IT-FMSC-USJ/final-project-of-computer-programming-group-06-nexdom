@@ -234,9 +234,8 @@ def inject_global_css():
     st.markdown(NEXDOM_CSS, unsafe_allow_html=True)
 
 
-# -------------------------------------------------------
 # Helper: Styled section header (replaces plain st.subheader)
-# -------------------------------------------------------
+
 def section_header(title: str, subtitle: str = ""):
     subtitle_html = f"<p style='color:#64748B; font-size:0.9rem; margin:0 0 0.5rem 0;'>{subtitle}</p>" if subtitle else ""
     st.markdown(
@@ -252,9 +251,8 @@ def section_header(title: str, subtitle: str = ""):
     )
 
 
-# -------------------------------------------------------
 # Helper: Styled info/stat card
-# -------------------------------------------------------
+
 def stat_card(label: str, value, icon: str = "", color: str = "#1A56DB"):
     st.markdown(
         f"""
@@ -271,9 +269,8 @@ def stat_card(label: str, value, icon: str = "", color: str = "#1A56DB"):
     )
 
 
-# -------------------------------------------------------
 # Helper: Page banner / hero block
-# -------------------------------------------------------
+
 def page_banner(title: str, subtitle: str, icon: str = "🏠"):
     st.markdown(
         f"""

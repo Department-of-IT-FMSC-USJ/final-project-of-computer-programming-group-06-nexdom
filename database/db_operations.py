@@ -14,9 +14,6 @@ class DatabaseManager:
     def __init__(self):
         init_db()
 
-    # ==========================================
-    #              USER OPERATIONS
-    # ==========================================
 
     def create_user(self, name, email, password, phone, role, address=""):
         """Create a new user (customer or provider)"""
@@ -169,9 +166,7 @@ class DatabaseManager:
             db.close()
             return {"success": False, "message": str(e)}
 
-    # ==========================================
-    #          PROVIDER PROFILE OPERATIONS
-    # ==========================================
+
 
     def create_provider_profile(self, user_id, service_type, experience,
                                 hourly_rate, location, description):
@@ -316,9 +311,7 @@ class DatabaseManager:
             db.close()
             return []
 
-    # ==========================================
-    #           BOOKING OPERATIONS
-    # ==========================================
+
 
     def create_booking(self, customer_id, provider_id, service_type,
                        booking_date, description):
@@ -470,9 +463,6 @@ class DatabaseManager:
             db.close()
             return None
 
-    # ==========================================
-    #           REVIEW OPERATIONS
-    # ==========================================
 
     def create_review(self, booking_id, customer_id, provider_id,
                       rating, review_text, service_type):
@@ -636,9 +626,6 @@ class DatabaseManager:
             db.close()
             return {5: 0, 4: 0, 3: 0, 2: 0, 1: 0}
 
-    # ==========================================
-    #           STATISTICS / DASHBOARD
-    # ==========================================
 
     def get_provider_earnings(self, provider_id):
         """Calculate total earnings for a provider"""
@@ -696,9 +683,6 @@ class DatabaseManager:
             return {}
 
     
-    # ==========================================
-    #      PROVIDER REGISTRATION REQUESTS
-    # ==========================================
 
     def create_provider_request(self, name, email, password, phone,
                                 service_type, experience, hourly_rate,
@@ -836,10 +820,6 @@ class DatabaseManager:
             return {"success": False, "message": str(e)}
 
 
-
-    # ==========================================
-    #          SEED SAMPLE DATA
-    # ==========================================
 
     def seed_sample_data(self):
         """Insert sample data into database"""

@@ -3,9 +3,8 @@ import streamlit as st
 st.title("🔧 Provider Profile")
 st.markdown("---")
 
-# ==========================================
 # CHECKS
-# ==========================================
+
 if "db" not in st.session_state:
     st.warning("⚠️ Please go to 🏠 Home page first.")
     st.stop()
@@ -26,9 +25,8 @@ if fresh_user:
 # Get profile from database
 profile = db.get_provider_profile(user["id"])
 
-# ==========================================
 # PROFILE DISPLAY
-# ==========================================
+
 col1, col2 = st.columns([2, 1])
 
 with col1:
@@ -75,9 +73,8 @@ with col2:
 
 st.markdown("---")
 
-# ==========================================
 # EDIT PROFILE
-# ==========================================
+
 if profile:
     st.subheader("✏️ Edit Profile")
 
@@ -228,9 +225,8 @@ else:
 
 st.markdown("---")
 
-# ==========================================
 # CHANGE PASSWORD
-# ==========================================
+
 st.subheader("🔒 Change Password")
 
 with st.form("provider_change_password"):
@@ -269,9 +265,8 @@ with st.form("provider_change_password"):
 
 st.markdown("---")
 
-# ==========================================
 # QUICK REVIEW SUMMARY
-# ==========================================
+
 st.subheader("⭐ Recent Reviews")
 
 reviews = db.get_provider_reviews(user["id"])

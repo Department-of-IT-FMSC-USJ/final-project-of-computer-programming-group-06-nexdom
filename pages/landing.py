@@ -5,18 +5,17 @@ inject_global_css()
 
 db = st.session_state.db
 
-# ==========================================
 # HERO BANNER
-# ==========================================
+
 page_banner(
     title="NEXDOM — Home Service Provider Platform",
     subtitle="Find trusted professionals for plumbing, carpentry, electrical, painting & cleaning.",
     icon="🏠",
 )
 
-# ==========================================
+
 # OUR SERVICES
-# ==========================================
+
 section_header("🔧 Our Services", "Browse by category — click to explore providers")
 
 st.markdown("""
@@ -71,9 +70,8 @@ for col, (icon, name, bg, border, key) in zip(
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # PLATFORM STATS
-# ==========================================
+
 section_header("📊 Platform Statistics", "Live numbers from our growing community")
 
 stats = db.get_platform_stats()
@@ -105,9 +103,8 @@ for col, label, value, color in stat_configs:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # TOP PROVIDERS
-# ==========================================
+
 section_header("🏆 Top Rated Providers", "Our highest-rated professionals this season")
 
 all_providers = db.get_all_providers()
@@ -146,10 +143,9 @@ for i, col in enumerate(top_cols):
             )
 
 st.markdown("<br>", unsafe_allow_html=True)
-
-# ==========================================
+            
 # CHATBOT CALLOUT
-# ==========================================
+
 st.markdown(
     """
     <div style='background:linear-gradient(135deg,#1E1B4B,#312E81);

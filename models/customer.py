@@ -13,7 +13,7 @@ class Customer(User):
         self.__booking_history = []
         self.__reviews_given = []
 
-    # ---- Getters ----
+    # Getters
     def get_address(self):
         return self.__address
 
@@ -23,14 +23,13 @@ class Customer(User):
     def get_reviews_given(self):
         return self.__reviews_given
 
-    # ---- Setters ----
+    # Setters
     def set_address(self, address):
         if address and len(address) >= 3:
             self.__address = address
             return True
         return False
 
-    # ---- Core Methods ----
     def search_providers(self, provider_list, service_type):
         """
         Search for service providers by service type.
@@ -70,7 +69,7 @@ class Customer(User):
                 return booking
         return None
 
-    # ---- Display ----
+    # Display
     def display_info(self):
         """Return customer info as dictionary"""
         info = super().display_info()

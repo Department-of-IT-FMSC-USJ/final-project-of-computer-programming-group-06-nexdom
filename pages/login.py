@@ -35,7 +35,7 @@ if st.session_state.get("logged_in"):
         st.rerun()
     st.stop()
 
-# ---- Banner ----
+# Banner
 page_banner(
     title="Welcome Back",
     subtitle="Sign in to your NEXDOM account to continue.",

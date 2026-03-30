@@ -4,9 +4,8 @@ from chatbot.sentiment_analyzer import SentimentAnalyzer
 st.title("⭐ My Reviews")
 st.markdown("---")
 
-# ==========================================
 # CHECKS
-# ==========================================
+
 if "db" not in st.session_state:
     st.warning("⚠️ Please go to 🏠 Home page first.")
     st.stop()
@@ -24,9 +23,8 @@ reviews = db.get_provider_reviews(user["id"])
 avg_rating = db.get_provider_average_rating(user["id"])
 distribution = db.get_provider_rating_distribution(user["id"])
 
-# ==========================================
 # REVIEW STATISTICS
-# ==========================================
+
 st.subheader("📊 Review Statistics")
 stat1, stat2, stat3, stat4 = st.columns(4)
 stat1.metric("⭐ Average Rating", f"{avg_rating}/5")
@@ -42,9 +40,8 @@ else:
 
 st.markdown("---")
 
-# ==========================================
 # RATING DISTRIBUTION
-# ==========================================
+
 if reviews:
     st.subheader("📊 Rating Distribution")
     total_reviews = len(reviews)
@@ -64,9 +61,8 @@ if reviews:
 
     st.markdown("---")
 
-# ==========================================
 # SENTIMENT ANALYSIS OVERVIEW
-# ==========================================
+
 st.subheader("🧠 Sentiment Analysis Overview")
 st.markdown(
     "*Our system analyzes the text of each review to determine "
@@ -123,9 +119,8 @@ if reviews:
 
 st.markdown("---")
 
-# ==========================================
 # INDIVIDUAL REVIEW CARDS
-# ==========================================
+
 st.subheader("📝 Individual Reviews")
 
 if not reviews:

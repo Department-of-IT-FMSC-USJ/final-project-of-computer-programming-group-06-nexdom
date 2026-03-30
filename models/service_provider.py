@@ -17,7 +17,7 @@ class ProviderProfile:
         self.__description = description
         self.__is_available = True
 
-    # ---- Getters ----
+    # Getters
     def get_user_id(self):
         return self.__user_id
 
@@ -39,7 +39,7 @@ class ProviderProfile:
     def is_available(self):
         return self.__is_available
 
-    # ---- Setters ----
+    # Setters
     def set_service_type(self, service_type):
         self.__service_type = service_type
 
@@ -85,7 +85,7 @@ class ServiceProvider(User):
         self.__reviews_received = []
         self.__total_earnings = 0.0
 
-    # ---- Getters ----
+    # Getters
     def get_profile(self):
         return self.__profile
 
@@ -105,7 +105,7 @@ class ServiceProvider(User):
         total = sum(r.get_rating() for r in self.__reviews_received)
         return round(total / len(self.__reviews_received), 1)
 
-    # ---- Profile Management ----
+    # Profile Management
     def create_profile(self, service_type, experience, hourly_rate,
                        location, description):
         """Create provider profile"""
@@ -137,7 +137,7 @@ class ServiceProvider(User):
             self.__profile.set_availability(kwargs["availability"])
         return True
 
-    # ---- Booking Management ----
+    # Booking Management
     def receive_booking(self, booking):
         """Receive a new booking request"""
         self.__booking_requests.append(booking)
@@ -176,7 +176,7 @@ class ServiceProvider(User):
         return [b for b in self.__booking_requests
                 if b.get_status() == status]
 
-    # ---- Review Management ----
+    # Review Management
     def receive_review(self, review):
         """Receive a review from a customer"""
         self.__reviews_received.append(review)
@@ -190,7 +190,6 @@ class ServiceProvider(User):
                 distribution[rating] += 1
         return distribution
 
-    # ---- Display ----
     def display_info(self):
         """Return provider info as dictionary"""
         info = super().display_info()

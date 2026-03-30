@@ -10,16 +10,12 @@ page_banner(
     icon="🛡️",
 )
 
-# ==========================================
-# CHECKS
-# ==========================================
 if "db" not in st.session_state:
     st.warning("⚠️ Please go to 🏠 Home page first.")
     st.stop()
 
-# ==========================================
 # SIMPLE ADMIN PASSWORD GATE
-# ==========================================
+
 if "admin_authenticated" not in st.session_state:
     st.session_state.admin_authenticated = False
 
@@ -53,9 +49,8 @@ if st.button("🚪 Exit Admin"):
     st.session_state.admin_authenticated = False
     st.rerun()
 
-# ==========================================
 # PLATFORM STATISTICS
-# ==========================================
+
 section_header("📊 Platform Overview", "Live snapshot of all platform activity")
 
 stats = db.get_platform_stats()
@@ -105,9 +100,8 @@ st.markdown(
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # PROVIDER REGISTRATION REQUESTS
-# ==========================================
+
 section_header("📬 Provider Registration Requests", "Review and approve pending provider applications")
 
 pending_requests = db.get_all_provider_requests(status="pending")
@@ -194,9 +188,8 @@ with req_tab2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # ALL PROVIDERS TABLE
-# ==========================================
+
 section_header("🔧 All Service Providers", "Registered providers on the platform")
 
 providers = db.get_all_providers()
@@ -226,9 +219,8 @@ else:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # CHARTS
-# ==========================================
+
 section_header("📊 Analytics", "Visual breakdown of platform data")
 
 chart_col1, chart_col2 = st.columns(2)
@@ -265,9 +257,8 @@ with chart_col2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # ALL BOOKINGS TABLE
-# ==========================================
+
 section_header("📋 All Bookings", "Platform-wide booking history")
 
 all_bookings = []
@@ -308,9 +299,8 @@ else:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # ALL REVIEWS TABLE
-# ==========================================
+
 section_header("⭐ All Reviews", "Customer reviews submitted across all providers")
 
 all_reviews = []

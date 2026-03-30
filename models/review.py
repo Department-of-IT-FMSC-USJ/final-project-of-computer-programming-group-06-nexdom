@@ -35,7 +35,7 @@ class Review:
 
         self.__review_text = review_text
 
-    # ---- Getters ----
+    # Getters
     def get_review_id(self):
         return self.__review_id
 

@@ -9,9 +9,8 @@ page_banner(
     icon="👤",
 )
 
-# ==========================================
 # CHECKS
-# ==========================================
+
 if "db" not in st.session_state:
     st.warning("⚠️ Please go to 🏠 Home page first.")
     st.stop()
@@ -29,9 +28,8 @@ if fresh_user:
     user = fresh_user
     st.session_state.user_data = user
 
-# ==========================================
 # PROFILE INFO & STATS
-# ==========================================
+
 section_header("👤 Profile Overview")
 
 col1, col2 = st.columns([2, 1])
@@ -109,9 +107,8 @@ with col2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # EDIT PROFILE
-# ==========================================
+
 section_header("✏️ Edit Profile", "Update your personal information")
 
 with st.form("edit_customer_profile"):
@@ -158,9 +155,8 @@ with st.form("edit_customer_profile"):
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # CHANGE PASSWORD
-# ==========================================
+
 section_header("🔒 Change Password", "Keep your account secure")
 
 with st.form("change_password_form"):
@@ -192,9 +188,8 @@ with st.form("change_password_form"):
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # REVIEWS I'VE GIVEN
-# ==========================================
+
 section_header("⭐ Reviews I've Given", "Your past service feedback")
 
 reviews = db.get_customer_reviews(user["id"])
@@ -254,9 +249,8 @@ else:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ==========================================
 # RECENT BOOKINGS SUMMARY
-# ==========================================
+
 section_header("📋 Recent Bookings", "Your 5 most recent service bookings")
 
 bookings = db.get_customer_bookings(user["id"])

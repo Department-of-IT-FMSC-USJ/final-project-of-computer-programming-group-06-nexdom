@@ -7,9 +7,9 @@ from datetime import datetime
 from database.db_config import Base
 
 
-# ==========================================
+
 # USERS TABLE
-# ==========================================
+
 class UserDB(Base):
     __tablename__ = "users"
 
@@ -53,9 +53,9 @@ class UserDB(Base):
         return f"<User(id={self.id}, name='{self.name}', role='{self.role}')>"
 
 
-# ==========================================
+
 # PROVIDER PROFILE TABLE
-# ==========================================
+
 class ProviderProfileDB(Base):
     __tablename__ = "provider_profiles"
 
@@ -77,9 +77,9 @@ class ProviderProfileDB(Base):
         return f"<ProviderProfile(user_id={self.user_id}, service='{self.service_type}')>"
 
 
-# ==========================================
+
 # BOOKINGS TABLE
-# ==========================================
+
 class BookingDB(Base):
     __tablename__ = "bookings"
 
@@ -110,9 +110,8 @@ class BookingDB(Base):
         return f"<Booking(id={self.id}, status='{self.status}')>"
 
 
-# ==========================================
 # REVIEWS TABLE
-# ==========================================
+
 class ReviewDB(Base):
     __tablename__ = "reviews"
 
@@ -147,9 +146,9 @@ class ReviewDB(Base):
         return f"<Review(id={self.id}, rating={self.rating})>"
 
 
-# ==========================================
+
 # PROVIDER REGISTRATION REQUESTS TABLE
-# ==========================================
+
 class ProviderRequestDB(Base):
     __tablename__ = "provider_requests"
 

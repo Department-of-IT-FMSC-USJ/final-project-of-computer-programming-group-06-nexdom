@@ -1,18 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# ==========================================
-# DATABASE CONFIGURATION
-# ==========================================
 
-# SQLite (No installation needed!)
 DATABASE_URL = "sqlite:///service_app.db"
-
-# If you want to switch to MySQL later, just change this line:
-# DATABASE_URL = "mysql+mysqlconnector://username:password@localhost/service_app_db"
-
-# If you want to switch to PostgreSQL later:
-# DATABASE_URL = "postgresql+psycopg2://username:password@localhost/service_app_db"
 
 # Create engine
 engine = create_engine(

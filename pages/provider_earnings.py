@@ -3,9 +3,8 @@ import streamlit as st
 st.title("📊 My Earnings & Performance")
 st.markdown("---")
 
-# ==========================================
 # CHECKS
-# ==========================================
+
 if "db" not in st.session_state:
     st.warning("⚠️ Please go to 🏠 Home page first.")
     st.stop()
@@ -31,9 +30,9 @@ pending = [b for b in all_bookings if b["status"] == "pending"]
 rejected = [b for b in all_bookings if b["status"] == "rejected"]
 cancelled = [b for b in all_bookings if b["status"] == "cancelled"]
 
-# ==========================================
+
 # EARNINGS OVERVIEW
-# ==========================================
+
 st.subheader("💰 Earnings Overview")
 
 earn_col1, earn_col2, earn_col3, earn_col4 = st.columns(4)
@@ -63,9 +62,9 @@ else:
 
 st.markdown("---")
 
-# ==========================================
+
 # RATE INFORMATION
-# ==========================================
+
 if profile:
     st.subheader("💵 Rate Information")
 
@@ -92,9 +91,8 @@ if profile:
 
     st.markdown("---")
 
-# ==========================================
 # BOOKING STATISTICS
-# ==========================================
+
 st.subheader("📊 Booking Statistics")
 
 book_col1, book_col2, book_col3, book_col4, book_col5 = st.columns(5)
@@ -149,9 +147,9 @@ if all_bookings:
 
 st.markdown("---")
 
-# ==========================================
+
 # PERFORMANCE METRICS
-# ==========================================
+
 st.subheader("🏆 Performance Metrics")
 
 perf_col1, perf_col2, perf_col3 = st.columns(3)
@@ -219,9 +217,8 @@ with perf_col3:
 
 st.markdown("---")
 
-# ==========================================
 # JOB HISTORY TABS
-# ==========================================
+
 st.subheader("📋 Job History")
 
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -387,9 +384,8 @@ with tab4:
 
 st.markdown("---")
 
-# ==========================================
 # TIPS FOR IMPROVEMENT
-# ==========================================
+
 st.subheader("💡 Tips to Improve")
 
 if avg_rating >= 4.5:

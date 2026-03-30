@@ -10,9 +10,6 @@ def load_sample_data():
     Used to populate the app with test data.
     """
 
-    # ============================================
-    #              SERVICE PROVIDERS
-    # ============================================
 
     provider1 = ServiceProvider(
         1, "Kamal Silva", "kamal@email.com", "pass123", "0771234567"
@@ -83,9 +80,6 @@ def load_sample_data():
         provider5, provider6, provider7, provider8
     ]
 
-    # ============================================
-    #                 CUSTOMERS
-    # ============================================
 
     customer1 = Customer(
         101, "Ashan Bandara", "ashan@email.com",
@@ -102,11 +96,8 @@ def load_sample_data():
 
     all_customers = [customer1, customer2, customer3]
 
-    # ============================================
-    #              SAMPLE REVIEWS
-    # ============================================
 
-    # ---- Reviews for Kamal (Plumber) ----
+    # Reviews for Kamal (Plumber)
     reviews_kamal = [
         Review(1, 101, "Ashan Bandara", 1, "Kamal Silva", 5,
                "Excellent work! Very professional and punctual. Fixed the leak quickly and cleanly.",
@@ -124,7 +115,7 @@ def load_sample_data():
     for r in reviews_kamal:
         provider1.receive_review(r)
 
-    # ---- Reviews for Nimal (Plumber) ----
+    # Reviews for Nimal (Plumber)
     reviews_nimal = [
         Review(5, 101, "Ashan Bandara", 2, "Nimal Perera", 3,
                "Average work. Was late and took too long. But price was reasonable.",
@@ -139,7 +130,7 @@ def load_sample_data():
     for r in reviews_nimal:
         provider2.receive_review(r)
 
-    # ---- Reviews for Saman (Carpenter) ----
+    # Reviews for Saman (Carpenter)
     reviews_saman = [
         Review(8, 101, "Ashan Bandara", 3, "Saman Fernando", 5,
                "Amazing carpenter! Beautiful furniture. Very professional and skilled craftsman.",
@@ -154,7 +145,7 @@ def load_sample_data():
     for r in reviews_saman:
         provider3.receive_review(r)
 
-    # ---- Reviews for Ruwan (Electrician) ----
+    # Reviews for Ruwan (Electrician)
     reviews_ruwan = [
         Review(11, 101, "Ashan Bandara", 4, "Ruwan Dias", 4,
                "Good electrician. Fixed the wiring issue quickly. Professional and experienced.",
@@ -169,7 +160,7 @@ def load_sample_data():
     for r in reviews_ruwan:
         provider4.receive_review(r)
 
-    # ---- Reviews for Ajith (Painter) ----
+    # Reviews for Ajith (Painter)
     reviews_ajith = [
         Review(14, 102, "Dilini Jayawardena", 5, "Ajith Kumara", 4,
                "Good painting work. Clean finish and friendly person. Quality paint used.",
@@ -181,7 +172,7 @@ def load_sample_data():
     for r in reviews_ajith:
         provider5.receive_review(r)
 
-    # ---- Reviews for Chaminda (Cleaning) ----
+    # Reviews for Chaminda (Cleaning)
     reviews_chaminda = [
         Review(16, 101, "Ashan Bandara", 6, "Chaminda Bandara", 5,
                "Spotless cleaning! Very thorough and professional. Highly recommend this service.",
@@ -193,7 +184,7 @@ def load_sample_data():
     for r in reviews_chaminda:
         provider6.receive_review(r)
 
-    # ---- Reviews for Lasith (Electrician) ----
+    # Reviews for Lasith (Electrician)
     reviews_lasith = [
         Review(18, 109, "Harsha Kumara", 7, "Lasith Malinga", 3,
                "Average work. Not very experienced with complex issues. Some delay in arrival.",
@@ -205,7 +196,7 @@ def load_sample_data():
     for r in reviews_lasith:
         provider7.receive_review(r)
 
-    # ---- Reviews for Dinesh (Carpenter) ----
+    # Reviews for Dinesh (Carpenter)
     reviews_dinesh = [
         Review(20, 101, "Ashan Bandara", 8, "Dinesh Priyantha", 4,
                "Good carpenter. Very experienced and skilled. Quality work but bit expensive.",
@@ -217,9 +208,6 @@ def load_sample_data():
     for r in reviews_dinesh:
         provider8.receive_review(r)
 
-    # ============================================
-    #           SAMPLE BOOKINGS
-    # ============================================
 
     # Completed booking for Ashan with Kamal
     booking1 = Booking(

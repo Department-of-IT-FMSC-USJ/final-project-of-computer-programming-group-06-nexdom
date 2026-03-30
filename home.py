@@ -2,9 +2,8 @@ import streamlit as st
 from database.db_operations import DatabaseManager
 from pages.style import inject_global_css, NEXDOM_CSS
 
-# ==========================================
 # PAGE CONFIG — only here, nowhere else
-# ==========================================
+
 st.set_page_config(
     page_title="NEXDOM",
     page_icon="🏠",
@@ -12,14 +11,12 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==========================================
 # INJECT GLOBAL STYLES
-# ==========================================
+
 st.markdown(NEXDOM_CSS, unsafe_allow_html=True)
 
-# ==========================================
 # INITIALIZE DATABASE & SESSION STATE
-# ==========================================
+
 if "db" not in st.session_state:
     st.session_state.db = DatabaseManager()
     seeded = st.session_state.db.seed_sample_data()
@@ -32,9 +29,8 @@ if "logged_in" not in st.session_state:
     st.session_state.user_role = None
     st.session_state.chat_history = []
 
-# ==========================================
 # ROLE-BASED NAVIGATION
-# ==========================================
+
 role = st.session_state.get("user_role")
 logged_in = st.session_state.get("logged_in", False)
 
@@ -81,9 +77,8 @@ elif role == "provider":
 else:
     pages = public_pages
 
-# ==========================================
 # SIDEBAR — user info + logout
-# ==========================================
+
 st.sidebar.markdown(
     """
     <div style='text-align:center; padding: 1rem 0 0.5rem 0;'>
@@ -141,8 +136,7 @@ else:
     )
 
 
-# ==========================================
 # RUN NAVIGATION
-# ==========================================
+
 pg = st.navigation(pages, position="sidebar")
 pg.run()

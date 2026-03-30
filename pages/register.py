@@ -13,26 +13,27 @@ col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
     role = st.selectbox("👤 Register As", ["customer", "provider"])
-    address = ""  # default value for customers
+    address = ""
 
     with st.form("register_form"):
-        name = st.text_input("Full Name *")
-        email = st.text_input("Email *")
+        name     = st.text_input("Full Name *")
+        email    = st.text_input("Email *")
         password = st.text_input("Password *", type="password")
-        confirm = st.text_input("Confirm Password *", type="password")
-        phone = st.text_input("Phone *")
+        confirm  = st.text_input("Confirm Password *", type="password")
+        phone    = st.text_input("Phone *")
 
         if role == "customer":
             address = st.text_input("Address *")
 
         if role == "provider":
+            st.info("📋 Provider registrations require **admin approval** before you can log in.")
             service_type = st.selectbox(
                 "Service *",
                 ["plumbing", "carpentry", "electrical", "painting", "cleaning"]
             )
-            experience = st.number_input("Experience (years)", 0, 50, 1)
+            experience  = st.number_input("Experience (years)", 0, 50, 1)
             hourly_rate = st.number_input("Rate (Rs./hr)", 100, 10000, 500)
-            location = st.text_input("Location *")
+            location    = st.text_input("Location *")
             description = st.text_area("Description *")
 
         if st.form_submit_button("📝 Register", use_container_width=True):
@@ -52,21 +53,36 @@ with col2:
                 for e in errors:
                     st.error(f"❌ {e}")
             else:
-                # Create user in database
-                result = db.create_user(
-                    name, email, password, phone, role,
-                    address if role == "customer" else ""
-                )
+                if role == "customer":
+                    # Customers register directly as before
+                    result = db.create_user(
+                        name, email, password, phone, role, address
+                    )
+                    if result["success"]:
+                        st.success("✅ Registered successfully! Please login.")
+                        st.balloons()
+                    else:
+                        st.error(f"❌ {result['message']}")
 
-                if result["success"]:
-                    # Create provider profile if provider
-                    if role == "provider":
-                        db.create_provider_profile(
-                            result["user_id"], service_type,
-                            experience, hourly_rate,
-                            location, description
+                elif role == "provider":
+                    # Providers submit a request — pending admin approval
+                    result = db.create_provider_request(
+                        name, email, password, phone,
+                        service_type, experience, hourly_rate,
+                        location, description
+                    )
+                    if result["success"]:
+                        st.success(
+                            "✅ Registration request submitted! "
+                            "Please wait for **admin approval** before logging in."
                         )
-                    st.success("✅ Registered! Please login.")
-                    st.balloons()
-                else:
-                    st.error(f"❌ {result['message']}")
+                        st.balloons()
+                    else:
+                        st.error(f"❌ {result['message']}")
+
+    st.markdown("---")
+    col_r1, col_r2, col_r3 = st.columns([1, 2, 1])
+    with col_r2:
+        st.markdown("**Already have an account?**")
+        if st.button("🔑 Login Here", use_container_width=True):
+            st.switch_page("pages/login.py")

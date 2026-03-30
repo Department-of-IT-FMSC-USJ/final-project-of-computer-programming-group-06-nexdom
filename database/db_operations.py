@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from database.db_config import get_db, init_db
-from database.db_models import UserDB, ProviderProfileDB, BookingDB, ReviewDB
+from database.db_models import UserDB, ProviderProfileDB, BookingDB, ReviewDB, ProviderRequestDB
 from datetime import datetime
 
 
@@ -694,6 +694,148 @@ class DatabaseManager:
         except Exception as e:
             db.close()
             return {}
+
+    
+    # ==========================================
+    #      PROVIDER REGISTRATION REQUESTS
+    # ==========================================
+
+    def create_provider_request(self, name, email, password, phone,
+                                service_type, experience, hourly_rate,
+                                location, description):
+        """Submit a provider registration request"""
+        db = get_db()
+        try:
+            # Check if email already exists in users
+            existing_user = db.query(UserDB).filter(
+                UserDB.email == email
+            ).first()
+            if existing_user:
+                db.close()
+                return {"success": False, "message": "Email already registered!"}
+
+            # Check if a pending request already exists
+            existing_req = db.query(ProviderRequestDB).filter(
+                ProviderRequestDB.email == email,
+                ProviderRequestDB.status == "pending"
+            ).first()
+            if existing_req:
+                db.close()
+                return {"success": False, "message": "A pending request already exists for this email!"}
+
+            req = ProviderRequestDB(
+                name=name, email=email, password=password,
+                phone=phone, service_type=service_type,
+                experience=experience, hourly_rate=hourly_rate,
+                location=location, description=description,
+                status="pending"
+            )
+            db.add(req)
+            db.commit()
+            db.close()
+            return {"success": True, "message": "Request submitted!"}
+        except Exception as e:
+            db.rollback()
+            db.close()
+            return {"success": False, "message": str(e)}
+
+
+    def get_all_provider_requests(self, status=None):
+        """Get all provider registration requests"""
+        db = get_db()
+        try:
+            query = db.query(ProviderRequestDB)
+            if status:
+                query = query.filter(ProviderRequestDB.status == status)
+            requests = query.order_by(ProviderRequestDB.created_at.desc()).all()
+
+            result = []
+            for r in requests:
+                result.append({
+                    "id": r.id,
+                    "name": r.name,
+                    "email": r.email,
+                    "phone": r.phone,
+                    "service_type": r.service_type,
+                    "experience": r.experience,
+                    "hourly_rate": r.hourly_rate,
+                    "location": r.location,
+                    "description": r.description,
+                    "status": r.status,
+                    "created_at": r.created_at.strftime("%Y-%m-%d %H:%M")
+                    if r.created_at else ""
+                })
+            db.close()
+            return result
+        except Exception as e:
+            db.close()
+            return []
+
+
+    def process_provider_request(self, request_id, action):
+        """
+        Approve or reject a provider registration request.
+        action = 'approved' or 'rejected'
+        """
+        db = get_db()
+        try:
+            req = db.query(ProviderRequestDB).filter(
+                ProviderRequestDB.id == request_id
+            ).first()
+
+            if not req:
+                db.close()
+                return {"success": False, "message": "Request not found!"}
+
+            if action == "approved":
+                # Check email not already taken
+                existing = db.query(UserDB).filter(
+                    UserDB.email == req.email
+                ).first()
+                if existing:
+                    req.status = "rejected"
+                    db.commit()
+                    db.close()
+                    return {"success": False, "message": "Email already registered!"}
+
+                # Create the user account
+                new_user = UserDB(
+                    name=req.name, email=req.email,
+                    password=req.password, phone=req.phone,
+                    role="provider"
+                )
+                db.add(new_user)
+                db.flush()
+
+                # Create the provider profile
+                profile = ProviderProfileDB(
+                    user_id=new_user.id,
+                    service_type=req.service_type,
+                    experience=req.experience,
+                    hourly_rate=req.hourly_rate,
+                    location=req.location,
+                    description=req.description
+                )
+                db.add(profile)
+                req.status = "approved"
+                db.commit()
+                db.close()
+                return {"success": True, "message": f"{req.name} approved and account created!"}
+
+            elif action == "rejected":
+                req.status = "rejected"
+                db.commit()
+                db.close()
+                return {"success": True, "message": f"{req.name}'s request rejected."}
+
+            db.close()
+            return {"success": False, "message": "Invalid action!"}
+        except Exception as e:
+            db.rollback()
+            db.close()
+            return {"success": False, "message": str(e)}
+
+
 
     # ==========================================
     #          SEED SAMPLE DATA

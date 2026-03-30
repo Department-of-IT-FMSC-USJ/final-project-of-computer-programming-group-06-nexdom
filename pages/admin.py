@@ -61,6 +61,72 @@ st.info(f"📈 **Platform Completion Rate: {rate:.0f}%** — {complete} out of {
 st.markdown("---")
 
 # ==========================================
+# PROVIDER REGISTRATION REQUESTS
+# ==========================================
+st.subheader("📬 Provider Registration Requests")
+
+pending_requests = db.get_all_provider_requests(status="pending")
+all_requests     = db.get_all_provider_requests()
+
+req_tab1, req_tab2 = st.tabs([
+    f"🟡 Pending ({len(pending_requests)})",
+    f"📋 All Requests ({len(all_requests)})"
+])
+
+with req_tab1:
+    if not pending_requests:
+        st.info("✅ No pending requests.")
+    for req in pending_requests:
+        with st.expander(
+            f"🟡 **{req['name']}** | {req['service_type'].title()} | "
+            f"{req['location']} | Rs.{req['hourly_rate']}/hr | {req['created_at']}"
+        ):
+            c1, c2 = st.columns([3, 1])
+            with c1:
+                st.write(f"**👤 Name:** {req['name']}")
+                st.write(f"**📧 Email:** {req['email']}")
+                st.write(f"**📞 Phone:** {req['phone']}")
+                st.write(f"**🔧 Service:** {req['service_type'].title()}")
+                st.write(f"**💼 Experience:** {req['experience']} years")
+                st.write(f"**💰 Rate:** Rs.{req['hourly_rate']}/hr")
+                st.write(f"**📍 Location:** {req['location']}")
+                st.write(f"**📝 Description:** {req['description']}")
+            with c2:
+                if st.button("✅ Approve", key=f"approve_{req['id']}", use_container_width=True):
+                    result = db.process_provider_request(req["id"], "approved")
+                    if result["success"]:
+                        st.success(result["message"])
+                        st.rerun()
+                    else:
+                        st.error(result["message"])
+
+                if st.button("❌ Reject", key=f"reject_{req['id']}", use_container_width=True):
+                    result = db.process_provider_request(req["id"], "rejected")
+                    if result["success"]:
+                        st.warning(result["message"])
+                        st.rerun()
+                    else:
+                        st.error(result["message"])
+
+with req_tab2:
+    if not all_requests:
+        st.info("No requests yet.")
+    else:
+        import pandas as pd
+        df_req = pd.DataFrame(all_requests)
+        df_req_display = df_req[[
+            "name", "email", "service_type",
+            "location", "hourly_rate", "status", "created_at"
+        ]].copy()
+        df_req_display.columns = [
+            "Name", "Email", "Service",
+            "Location", "Rate (Rs./hr)", "Status", "Submitted"
+        ]
+        st.dataframe(df_req_display, use_container_width=True, hide_index=True)
+
+st.markdown("---")
+
+# ==========================================
 # ALL PROVIDERS TABLE
 # ==========================================
 st.subheader("🔧 All Service Providers")

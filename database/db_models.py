@@ -145,3 +145,26 @@ class ReviewDB(Base):
 
     def __repr__(self):
         return f"<Review(id={self.id}, rating={self.rating})>"
+
+
+# ==========================================
+# PROVIDER REGISTRATION REQUESTS TABLE
+# ==========================================
+class ProviderRequestDB(Base):
+    __tablename__ = "provider_requests"
+
+    id          = Column(Integer, primary_key=True, autoincrement=True)
+    name        = Column(String(100), nullable=False)
+    email       = Column(String(100), nullable=False)
+    password    = Column(String(255), nullable=False)
+    phone       = Column(String(15), nullable=False)
+    service_type = Column(String(50), nullable=False)
+    experience  = Column(Integer, default=0)
+    hourly_rate = Column(Float, default=0.0)
+    location    = Column(String(255), default="")
+    description = Column(Text, default="")
+    status      = Column(String(20), default="pending")  # pending/approved/rejected
+    created_at  = Column(DateTime, default=datetime.now)
+
+    def __repr__(self):
+        return f"<ProviderRequest {self.name} - {self.status}>"

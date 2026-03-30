@@ -1,5 +1,6 @@
 import streamlit as st
 from database.db_operations import DatabaseManager
+from pages.style import inject_global_css, NEXDOM_CSS
 
 # ==========================================
 # PAGE CONFIG — only here, nowhere else
@@ -10,6 +11,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# ==========================================
+# INJECT GLOBAL STYLES
+# ==========================================
+st.markdown(NEXDOM_CSS, unsafe_allow_html=True)
 
 # ==========================================
 # INITIALIZE DATABASE & SESSION STATE
@@ -78,13 +84,41 @@ else:
 # ==========================================
 # SIDEBAR — user info + logout
 # ==========================================
-st.sidebar.title("🏠 NEXDOM")
-st.sidebar.markdown("---")
+st.sidebar.markdown(
+    """
+    <div style='text-align:center; padding: 1rem 0 0.5rem 0;'>
+      <div style='font-size:2.2rem;'>🏠</div>
+      <div style='font-size:1.4rem; font-weight:800; color:#F8FAFC;
+                  letter-spacing:-0.5px; margin-top:4px;'>NEXDOM</div>
+      <div style='font-size:0.72rem; color:#94A3B8; text-transform:uppercase;
+                  letter-spacing:1.5px; margin-top:2px;'>Home Services</div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+st.sidebar.markdown(
+    "<hr style='border-top:1px solid #334155; margin:0.5rem 0;'>",
+    unsafe_allow_html=True,
+)
 
 if logged_in and st.session_state.user_data:
-    st.sidebar.success(
-        f"👤 **{st.session_state.user_data['name']}**\n\n"
-        f"Role: {st.session_state.user_role.upper()}"
+    role_icons = {"customer": "👤", "provider": "🔧", "admin": "🛡️"}
+    role_icon = role_icons.get(st.session_state.user_role, "👤")
+    st.sidebar.markdown(
+        f"""
+        <div style='background:#1E3A5F; border:1px solid #1D4ED8; border-radius:10px;
+                    padding:0.8rem 1rem; margin-bottom:0.8rem;'>
+          <div style='font-size:1.3rem;'>{role_icon}</div>
+          <div style='font-weight:700; color:#E2E8F0; font-size:0.95rem; margin-top:2px;'>
+            {st.session_state.user_data['name']}
+          </div>
+          <div style='font-size:0.72rem; color:#93C5FD; margin-top:2px;
+                      text-transform:uppercase; letter-spacing:0.5px;'>
+            {st.session_state.user_role}
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
     if st.sidebar.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
@@ -93,7 +127,18 @@ if logged_in and st.session_state.user_data:
         st.session_state.chat_history = []
         st.rerun()
 else:
-    st.sidebar.info("Please login to access all features.")
+    st.sidebar.markdown(
+        """
+        <div style='background:#1E3A5F; border:1px solid #334155; border-radius:10px;
+                    padding:0.8rem 1rem; margin-bottom:0.8rem; text-align:center;'>
+          <div style='font-size:1.5rem;'>🔒</div>
+          <div style='font-size:0.82rem; color:#94A3B8; margin-top:4px;'>
+            Please login to access<br>all features.
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 # ==========================================
